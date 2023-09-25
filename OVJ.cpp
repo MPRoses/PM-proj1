@@ -35,6 +35,7 @@ int main() {
   if (gmtime_r(&t, &date) == NULL) {
     return 1;
   }
+  
   // variabelen die gebruikt worden voor bijhouden en berekenen leeftijd
   int Geboortejaar;
   int Geboortemaand;
@@ -202,8 +203,6 @@ int main() {
   cin >> getalGok;
 
   cout << endl << "Het antwoord was:" << endl;
-
-
   cout << "   " << getal1 << endl << "   " << getal2 << " x" << endl; 
 
   if (deelGetal1 == 0 || deelGetal2 == 0) {
