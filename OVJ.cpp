@@ -6,7 +6,7 @@ using namespace std;
 
 int main() {
   // Programma bepaald of gebruiker geschikt is voor universitaire studie.
-  // Gecompileerd met behulp van g++
+  // Gecompileerd met g++
 
   // intro
   cout << " _________________________________________________________" << endl;
