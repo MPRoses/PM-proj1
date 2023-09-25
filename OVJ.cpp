@@ -1,3 +1,7 @@
+// Arthur van der Sterren en Jens van der Sloot
+// Programma bepaald of gebruiker geschikt is voor universitaire studie.
+// Gecompileerd met g++
+
 #include <iostream>
 #include <ctime>
 #include <cmath>
@@ -5,9 +9,6 @@
 using namespace std;
 
 int main() {
-  // Programma bepaald of gebruiker geschikt is voor universitaire studie.
-  // Gecompileerd met g++
-
   // intro
   cout << " _________________________________________________________" << endl;
   cout << "|                Titel: Vermenigvuldiging                 |" << endl;
