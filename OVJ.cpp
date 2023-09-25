@@ -1,52 +1,14 @@
 #include <iostream>
-#include <list>
 #include <ctime>
 #include <cmath>
-#include <string>
-
 
 using namespace std;
 
 int main() {
-  srand (time(NULL)); // seed creation
-  time_t t = time(NULL); // same thing
+  // Programma bepaald of gebruiker geschikt is voor universitaire studie.
+  // Gecompileerd met behulp van g++
 
-  // lines voor initialization cTime
-  struct tm date; 
-  if (gmtime_r(&t, &date) == NULL) {
-    return 1;
-  }
-
-  int Geboortejaar;
-  int Geboortemaand;
-  int Geboortedag;
-
-  int Dag = date.tm_mday;
-  int Maand = date.tm_mon + 1;
-  int Jaar = date.tm_year + 1900;
-
-  int LeeftijdJaren;
-  int LeeftijdMaanden;
-
-  int dagenVoorbijMaand = 0; // moet gezet worden als 0
-  int aantalSchrikkeljarenVoorbij;
-  int aantalDagenVoorbijVanDeJaren;
-  int aantalDagenVoorbijMaandEnDagen;
-  int aantalDagenVoorbijTotaal;
-
-  bool isSchrikkelJaar = (date.tm_year % 4 == 0);
-
-  int dagenInMaand[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-  int getal1 = (rand() % 90) + 10; 
-  int getal2 = (rand() % 90) + 10; 
-  int deelGetal1 = (getal2 % 10) * getal1;
-  int deelGetal2 = (getal2 / 10) * 10 * getal1;
-  int antwoord = getal1*getal2;
-  int getalGok = 0;
-  double epsilon = 0.1;
-
-
+  // intro
   cout << " _________________________________________________________" << endl;
   cout << "|                Titel: Vermenigvuldiging                 |" << endl;
   cout << "|                                                         |" << endl;
@@ -64,10 +26,54 @@ int main() {
   cout << "| een conclusie.                                          |" << endl;
   cout << " ---------------------------------------------------------" << endl;
 
-  string dagen[] = {"zo", "m", "di", "w", "do", "v", "za"};
-  string gokDag;
+  // generatie van seeds
+  srand (time(NULL));
+  time_t t = time(NULL); 
 
-  cout << "Geef uw geboortejaar: ";
+  // initializatie cTime
+  struct tm date; 
+  if (gmtime_r(&t, &date) == NULL) {
+    return 1;
+  }
+  // variabelen die gebruikt worden voor bijhouden en berekenen leeftijd
+  int Geboortejaar;
+  int Geboortemaand;
+  int Geboortedag;
+  int Dag = date.tm_mday;
+  int Maand = date.tm_mon + 1;
+  int Jaar = date.tm_year + 1900;
+  int LeeftijdJaren;
+  int LeeftijdMaanden;
+
+  // variabelen die gebruikt worden voor berekenen welke dag iemand geboren is
+  bool isSchrikkelJaar = (date.tm_year % 4 == 0);
+  int dagenVoorbijMaand = 0; // moet gezet worden als 0
+  int aantalSchrikkeljarenVoorbij;
+  int aantalDagenVoorbijVanDeJaren;
+  int aantalDagenVoorbijMaandEnDagen;
+  int aantalDagenVoorbijTotaal;
+  int dagenInMaand[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+  double dagGeboren;
+  char dagenLetter1ASCII[] = {122, 109, 100, 119, 100, 118, 122};
+  char dagenLetter2ASCII[] = {111, 0, 105, 0, 111, 0, 97};
+
+  // variabelen die gebruikt worden voor de vermenigvuldigingsvraag
+  int getal1 = (rand() % 90) + 10; 
+  int getal2 = (rand() % 90) + 10; 
+  int deelGetal1 = (getal2 % 10) * getal1;
+  int deelGetal2 = (getal2 / 10) * 10 * getal1;
+  int antwoord = getal1*getal2;
+  int getalGok = 0;
+  double epsilon = 0.1;
+  
+  // variabelen die gebruikt worden voor meerkeuzevraag
+  char gokDagLetter1;
+  char gokDagLetter2;
+  char meerkeuzeGok;
+
+  // invoeren van geboortedatum en checken of deze valide is
+
+  cout << endl << "Geef uw geboortejaar: ";
   cin >> Geboortejaar;
 
   if (Geboortejaar > Jaar || Geboortejaar <= 0) {
@@ -75,9 +81,13 @@ int main() {
     return 1;
   }
 
-  if ((Jaar < (Geboortejaar + 10)) || ((Geboortejaar + 101) < Jaar)) {
-    cout << "Je bent of te oud of te jong voor de universiteit, jammer!"
-         << endl;
+  if (Jaar < (Geboortejaar + 10)) {
+    cout << "Je bent te jong voor de universiteit, jammer!" << endl;
+    return 1;
+  }
+
+  if ((Geboortejaar + 101) < Jaar) {
+    cout << "Je bent te oud voor de universiteit, jammer!" << endl;
     return 1;
   }
 
@@ -119,6 +129,8 @@ int main() {
     return 1;
   }
 
+  // berekening van de leeftijd
+
   LeeftijdJaren = Jaar - Geboortejaar;
   LeeftijdMaanden = (Maand - Geboortemaand + 12) % 12;
 
@@ -145,7 +157,11 @@ int main() {
     LeeftijdMaanden = (LeeftijdMaanden + 12) % 12;
   }
 
-  cout << endl << "Je bent " << LeeftijdJaren << " jaar en " << LeeftijdMaanden << " maanden oud, dat zijn " << LeeftijdJaren * 12 + LeeftijdMaanden << " maanden in totaal!" << endl << endl;
+  cout << endl << "Je bent " << LeeftijdJaren << " jaar en " << LeeftijdMaanden 
+    << " maanden oud, dat zijn " << LeeftijdJaren * 12 + LeeftijdMaanden 
+      << " maanden in totaal!" << endl << endl;
+
+  // berekening van op welke dag iemand geboren is
 
   for (int x = 1; x < Geboortemaand; x++) {
     dagenVoorbijMaand += dagenInMaand[x];
@@ -157,22 +173,28 @@ int main() {
 
   aantalDagenVoorbijTotaal = aantalDagenVoorbijMaandEnDagen + aantalDagenVoorbijVanDeJaren;
 
-  double dagGeboren = aantalDagenVoorbijTotaal % 7;
+  dagGeboren = aantalDagenVoorbijTotaal % 7;
 
+  cout << "Op welke dag ben je geboren? Geef in kleine letters de eerste letter van de dag." << endl;
+  cin >> gokDagLetter1;
 
-  cout << "Op welke dag ben je geboren? Geef in kleine letters de eerste letter van de dag, en ook de tweede als het om di,do,za of zo gaat." << endl;
-  cin >> gokDag;
-
-
-  if (gokDag == dagen[static_cast<int>(round(dagGeboren))]) {
-    cout << "Goed geraden!"<< endl << endl;
+  if (gokDagLetter1 == dagenLetter1ASCII[static_cast<int>(round(dagGeboren))]) {
+    if (gokDagLetter1 == 'z' || gokDagLetter1 == 'd') {
+      cout << "Geef ook de tweede letter van de dag in kleine letters." << endl;
+      cin >> gokDagLetter2;
+      if (gokDagLetter2 != dagenLetter2ASCII[static_cast<int>(round(dagGeboren))]) {
+        cout << "Fout geraden!" << endl;
+        return 1;
+      }
+      cout << "Goed geraden!"<< endl << endl;  
+    }
   } else {
     cout << "Fout geraden!" << endl;
     return 1;
   }
 
-  // vanaf hier asl gebruiker 30 jaar of ouder is moet netter aangesproken worden
-  
+  // vermenigvuldigingsvraag
+
   cout << "   " << getal1 << endl << "   " << getal2 << " x" << endl << "   --" << endl; 
 
   cout << "Wat is het antwoord van de bovenstaande berekening?" << endl;
@@ -208,7 +230,7 @@ int main() {
     }
   }
 
-  string meerkeuzeGok;
+  // validatie vermeningvuldigingsvraag en optionele kunstvraag stellen.
 
   if ((getalGok >= antwoord * (1 - epsilon)) && (getalGok <= antwoord * (1 + epsilon))) {
     cout << endl << "Binnen de juiste foutmarges gegokt!" << endl;
@@ -221,7 +243,8 @@ int main() {
     cout << "*Geef de letter van het juiste antwoord!" << endl << endl;
 
     if (LeeftijdJaren >= 30) {
-      cout << "Welke kunststroming werd tussen 1909 en 1914 veel beoefend en staat beroemde schilder Pablo Picasso bekent om?" << endl;
+      cout << "Welke kunststroming werd tussen 1909 en 1914 veel beoefend en staat beroemde 
+        schilder Pablo Picasso bekent om?" << endl;
       cout << "A) Kubisme" << endl;
       cout << "B) Pointilisme" << endl;
       cout << "C) Realisme" << endl;
@@ -229,8 +252,9 @@ int main() {
 
       cin >> meerkeuzeGok;
 
-      if (meerkeuzeGok == "A" || meerkeuzeGok == "a") {
-        cout << endl << "Juist geraden! Het kubisme is te herkennen aan: geometrische vormen, veelal felle kleuren en een collagestijl." << endl;
+      if (meerkeuzeGok == 'A' || meerkeuzeGok == 'a') {
+        cout << endl << "Juist geraden! Het kubisme is te herkennen aan: geometrische vormen, 
+          veelal felle kleuren en een collagestijl." << endl;
         cout << "Je bent ofwel geschikt voor een alpha-studie, gefeliciteerd!" << endl << endl;
       } else {
         cout << endl << "Fout geraden!" << endl;
@@ -247,8 +271,9 @@ int main() {
 
       cin >> meerkeuzeGok;
 
-      if (meerkeuzeGok == "A" || meerkeuzeGok == "a") {
-        cout << endl << "Juist geraden! Vanwege deze stunt steeg de prijs van het schilderij met 24 miljoen euro!" << endl;
+      if (meerkeuzeGok == 'A' || meerkeuzeGok == 'a') {
+        cout << endl << "Juist geraden! Vanwege deze stunt steeg de prijs van het schilderij 
+          met 24 miljoen euro!" << endl;
         cout << "Je bent ofwel geschikt voor een alpha-studie, gefeliciteerd!" << endl << endl;
       } else {
         cout << endl << "Fout geraden!" << endl;
